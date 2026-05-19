@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Астана · Рейтинг школ 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0D0D0B;
+  --ink2: #1A1916;
+  --ink3: #2C2C28;
+  --paper: #F7F5F0;
+  --paper2: #EFECE5;
+  --paper3: #E5E1D8;
+  --line: rgba(255,255,255,0.07);
+  --line2: rgba(255,255,255,0.12);
+  --muted: #6B6860;
+  --ghost: #3A3A36;
+  --gold: #C8953A;
+  --gold2: #E8B86D;
+  --silver: #9A9A9A;
+  --bronze: #A07050;
+  --blue: #4A8FD4;
+  --blue-dim: rgba(74,143,212,0.15);
+  --green: #4EA87A;
+  --green-dim: rgba(78,168,122,0.15);
+  --amber: #D4943A;
+  --amber-dim: rgba(212,148,58,0.15);
+  --red: #C45A5A;
+  --red-dim: rgba(196,90,90,0.15);
+  --purple: #9B7FD4;
+  --purple-dim: rgba(155,127,212,0.15);
+  --ca: #4A8FD4;
+  --cd: #4EA87A;
+  --cv: #D4943A;
+  --ce: #9B7FD4;
+  --cp: #C45A5A;
+}
+
+html { font-size: 14px; }
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--ink);
+  color: var(--paper);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── LAYOUT ── */
+.shell {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 64px 1fr;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  grid-column: 1 / -1;
+  background: var(--ink2);
+  border-bottom: 1px solid var(--line2);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 40px;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.logo em { font-style: italic; color: var(--gold2); }
+
+.topbar-meta {
+  display: flex;
+  gap: 32px;
+  flex: 1;
+}
+
+.tmeta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.tmeta-label {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tmeta-val {
+  font-size: 12px;
+  color: var(--paper2);
+  font-weight: 400;
+}
+
+.topbar-filters {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+  align-items: center;
+}
+
+.fbtn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  border: 1px solid var(--ghost);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.15s;
+}
+.fbtn:hover { border-color: var(--line2); color: var(--paper3); }
+.fbtn.on { background: var(--gold); color: var(--ink); border-color: var(--gold); font-weight: 500; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--ink2);
+  border-right: 1px solid var(--line2);
+  overflow-y: auto;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--ghost); border-radius: 2px; }
+
+.s-section-title {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* WEIGHT SLIDERS */
+.weight-group { display: flex; flex-direction: column; gap: 14px; }
+
+.wrow { display: flex; flex-direction: column; gap: 6px; }
+
+.wrow-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wrow-label {
+  font-size: 10px;
+  color: var(--paper3);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.wdot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.wrow-val {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--paper);
+  min-width: 32px;
+  text-align: right;
+}
+
+.wslider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--ghost);
+  border-radius: 1px;
+  outline: none;
+  cursor: pointer;
+}
+.wslider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--paper);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.wslider::-webkit-slider-thumb:hover { transform: scale(1.3); }
+.wslider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: none;
+  cursor: pointer;
+}
+
+.wtotal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--line);
+  margin-top: 4px;
+}
+.wtotal-lbl { font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.wtotal-val { font-size: 13px; font-weight: 500; color: var(--green); }
+.wtotal-val.err { color: var(--red); }
+
+.reset-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--ghost);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+.reset-btn:hover { border-color: var(--line2); color: var(--paper3); }
+
+/* CITY STATS */
+.city-stats { display: flex; flex-direction: column; gap: 10px; }
+
+.cstat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.cstat:last-child { border-bottom: none; }
+.cstat-label { font-size: 10px; color: var(--muted); }
+.cstat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--paper);
+  letter-spacing: -0.02em;
+}
+
+/* SORT */
+.sort-row { display: flex; flex-direction: column; gap: 8px; }
+.sort-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 7px 12px;
+  border-radius: 3px;
+  border: 1px solid var(--ghost);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  text-align: left;
+  letter-spacing: 0.04em;
+  transition: all 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sort-btn:hover { border-color: var(--line2); color: var(--paper3); }
+.sort-btn.on { border-color: var(--gold); color: var(--gold2); }
+.sort-btn .sarr { opacity: 0.4; }
+.sort-btn.on .sarr { opacity: 1; }
+
+/* METHODOLOGY NOTE */
+.method-note {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+  border-left: 2px solid var(--ghost);
+  padding-left: 10px;
+}
+.method-note strong { color: var(--paper3); font-weight: 500; }
+
+/* ── MAIN CONTENT ── */
+.content {
+  overflow-y: auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.content::-webkit-scrollbar { width: 3px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb { background: var(--ghost); border-radius: 2px; }
+
+/* TABLE HEADER */
+.table-header {
+  display: grid;
+  grid-template-columns: 48px 1fr 90px 90px 90px 90px 90px 100px;
+  gap: 0;
+  padding: 0 20px 10px;
+  border-bottom: 1px solid var(--line2);
+  margin-bottom: 4px;
+}
+.th {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.th.r { text-align: right; }
+
+/* SCHOOL ROW */
+.srow {
+  background: var(--ink2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.srow:hover { border-color: var(--line2); }
+.srow.open { border-color: var(--ghost); }
+
+.srow-main {
+  display: grid;
+  grid-template-columns: 48px 1fr 90px 90px 90px 90px 90px 100px;
+  gap: 0;
+  align-items: center;
+  padding: 14px 20px;
+}
+
+.rank-cell { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
+
+.rank-n {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.r1 .rank-n { color: var(--gold2); }
+.r2 .rank-n { color: var(--silver); }
+.r3 .rank-n { color: var(--bronze); }
+.r4 .rank-n, .r5 .rank-n, .r6 .rank-n, .r7 .rank-n { color: var(--ghost); }
+
+.rank-medal { font-size: 8px; letter-spacing: 0.08em; color: var(--muted); }
+.r1 .rank-medal { color: var(--gold); }
+.r2 .rank-medal { color: var(--silver); }
+.r3 .rank-medal { color: var(--bronze); }
+
+.name-cell { padding-right: 20px; }
+
+.school-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--paper);
+  margin-bottom: 5px;
+  letter-spacing: 0.01em;
+}
+
+.school-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.stag {
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+.t-ib { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(74,143,212,0.25); }
+.t-al { background: var(--green-dim); color: var(--green); border: 1px solid rgba(78,168,122,0.25); }
+.t-ap { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(212,148,58,0.25); }
+.t-gap { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--line); }
+.t-warn { background: var(--red-dim); color: var(--red); border: 1px solid rgba(196,90,90,0.25); }
+.t-ok { background: var(--green-dim); color: var(--green); border: 1px solid rgba(78,168,122,0.25); }
+
+.score-cell { text-align: right; padding: 0 4px; }
+
+.mini-bar-wrap { display: flex; flex-direction: column; gap: 2px; align-items: flex-end; }
+.mini-bar-val { font-size: 11px; color: var(--paper3); font-weight: 400; margin-bottom: 2px; }
+.mini-bar-track { width: 60px; height: 2px; background: var(--ghost); border-radius: 1px; overflow: hidden; }
+.mini-bar-fill { height: 100%; border-radius: 1px; transition: width 0.4s ease; }
+
+.total-cell { text-align: right; }
+
+.total-score {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+.total-score .tsub { font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+.score-delta { font-size: 9px; margin-top: 2px; }
+.delta-up { color: var(--green); }
+.delta-dn { color: var(--red); }
+
+.expand-hint { font-size: 9px; color: var(--ghost); margin-top: 4px; text-align: right; }
+
+/* DETAIL PANEL */
+.detail-panel {
+  display: none;
+  border-top: 1px solid var(--line2);
+  padding: 24px 20px;
+  background: rgba(0,0,0,0.2);
+}
+.srow.open .detail-panel { display: block; }
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.detail-col { display: flex; flex-direction: column; gap: 12px; }
+
+.dblock {
+  background: var(--ink3);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+
+.dblock-title {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.drow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+}
+.drow:last-child { border-bottom: none; }
+.dk { color: var(--muted); flex-shrink: 0; }
+.dv { color: var(--paper2); text-align: right; font-size: 10px; max-width: 58%; line-height: 1.4; }
+
+.score-bars { display: flex; flex-direction: column; gap: 10px; }
+.sbar-row { display: flex; align-items: center; gap: 12px; }
+.sbar-label { font-size: 10px; color: var(--muted); width: 100px; flex-shrink: 0; }
+.sbar-track { flex: 1; height: 3px; background: var(--ghost); border-radius: 2px; overflow: hidden; }
+.sbar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+.sbar-val { font-size: 11px; color: var(--paper3); width: 28px; text-align: right; font-weight: 500; }
+
+.ib-history {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  padding: 8px 0;
+}
+.ib-yr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+.ib-bar-wrap { width: 100%; display: flex; align-items: flex-end; height: 48px; }
+.ib-bar {
+  width: 100%;
+  background: var(--gold);
+  border-radius: 2px 2px 0 0;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.ib-bar:hover { opacity: 1; }
+.ib-yr-label { font-size: 8px; color: var(--muted); }
+.ib-yr-val { font-size: 10px; color: var(--gold2); font-weight: 500; }
+.ib-avg-line { font-size: 9px; color: var(--muted); padding-top: 4px; border-top: 1px solid var(--line); }
+
+.unis-wrap { display: flex; flex-wrap: wrap; gap: 5px; }
+.uni-chip {
+  font-size: 9px;
+  padding: 3px 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--line2);
+  border-radius: 2px;
+  color: var(--paper3);
+  letter-spacing: 0.03em;
+}
+
+.detail-note {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.data-warn {
+  display: inline-block;
+  background: var(--amber-dim);
+  color: var(--amber);
+  border: 1px solid rgba(212,148,58,0.3);
+  font-size: 10px;
+  padding: 8px 12px;
+  border-radius: 3px;
+  line-height: 1.5;
+  max-width: 100%;
+}
+
+.empty { text-align: center; padding: 80px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="logo">Астана · <em>Рейтинг школ</em> · 2025</div>
+    <div class="topbar-meta">
+      <div class="tmeta">
+        <span class="tmeta-label">Школ в рейтинге</span>
+        <span class="tmeta-val">7</span>
+      </div>
+      <div class="tmeta">
+        <span class="tmeta-label">Критериев оценки</span>
+        <span class="tmeta-val">5</span>
+      </div>
+      <div class="tmeta">
+        <span class="tmeta-label">Верифицированы</span>
+        <span class="tmeta-val">2 из 7</span>
+      </div>
+      <div class="tmeta">
+        <span class="tmeta-label">Обновлено</span>
+        <span class="tmeta-val">Май 2026</span>
+      </div>
+      <div class="tmeta">
+        <span class="tmeta-label">Автор</span>
+        <span class="tmeta-val" style="font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--gold2)">Zhaiyk Sultan</span>
+      </div>
+    </div>
+    <div class="topbar-filters">
+      <button class="fbtn on" data-f="all">Все</button>
+      <button class="fbtn" data-f="ib">IB</button>
+      <button class="fbtn" data-f="cambridge">Cambridge</button>
+      <button class="fbtn" data-f="american">Американская</button>
+      <button class="fbtn" data-f="verified">Верифицир.</button>
+      <button class="fbtn" data-f="nodata">Нет данных</button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div>
+      <div class="s-section-title">Веса критериев · live пересчёт</div>
+      <div class="weight-group">
+        <div class="wrow">
+          <div class="wrow-top">
+            <div class="wrow-label"><div class="wdot" style="background:var(--ca)"></div>Академика</div>
+            <div class="wrow-val" id="w1v">40%</div>
+          </div>
+          <input class="wslider" type="range" min="0" max="70" step="5" value="40" id="w1">
+        </div>
+        <div class="wrow">
+          <div class="wrow-top">
+            <div class="wrow-label"><div class="wdot" style="background:var(--cd)"></div>Поступаемость</div>
+            <div class="wrow-val" id="w2v">30%</div>
+          </div>
+          <input class="wslider" type="range" min="0" max="70" step="5" value="30" id="w2">
+        </div>
+        <div class="wrow">
+          <div class="wrow-top">
+            <div class="wrow-label"><div class="wdot" style="background:var(--cv)"></div>Цена/качество</div>
+            <div class="wrow-val" id="w3v">15%</div>
+          </div>
+          <input class="wslider" type="range" min="0" max="50" step="5" value="15" id="w3">
+        </div>
+        <div class="wrow">
+          <div class="wrow-top">
+            <div class="wrow-label"><div class="wdot" style="background:var(--ce)"></div>Образ. среда</div>
+            <div class="wrow-val" id="w4v">10%</div>
+          </div>
+          <input class="wslider" type="range" min="0" max="50" step="5" value="10" id="w4">
+        </div>
+        <div class="wrow">
+          <div class="wrow-top">
+            <div class="wrow-label"><div class="wdot" style="background:var(--cp)"></div>Прозрачность</div>
+            <div class="wrow-val" id="w5v">5%</div>
+          </div>
+          <input class="wslider" type="range" min="0" max="30" step="5" value="5" id="w5">
+        </div>
+        <div class="wtotal-row">
+          <span class="wtotal-lbl">Сумма весов</span>
+          <div style="display:flex;gap:10px;align-items:center">
+            <button class="reset-btn" id="resetBtn">Сброс</button>
+            <span class="wtotal-val" id="wtotal">100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="s-section-title">Сортировка</div>
+      <div class="sort-row">
+        <button class="sort-btn on" data-s="total">Итоговый рейтинг <span class="sarr">↓</span></button>
+        <button class="sort-btn" data-s="academic">Академика <span class="sarr">↓</span></button>
+        <button class="sort-btn" data-s="destinations">Поступаемость <span class="sarr">↓</span></button>
+        <button class="sort-btn" data-s="value">Цена/качество <span class="sarr">↓</span></button>
+        <button class="sort-btn" data-s="transparency">Прозрачность <span class="sarr">↓</span></button>
+        <button class="sort-btn" data-s="name">По названию <span class="sarr">A→Z</span></button>
+      </div>
+    </div>
+
+    <div>
+      <div class="s-section-title">Контекст · Астана</div>
+      <div class="city-stats">
+        <div class="cstat">
+          <span class="cstat-label">Частных школ</span>
+          <span class="cstat-val">70</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-label">Учеников в частных</span>
+          <span class="cstat-val">42 674</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-label">Школ всего</span>
+          <span class="cstat-val">187</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-label">Мировой avg IB 2025</span>
+          <span class="cstat-val">30</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="s-section-title">Методология</div>
+      <div class="method-note">
+        <strong>Формула:</strong> R = Σ(wᵢ · Nᵢ), где Nᵢ — нормализованный показатель [0;1] по мин-макс в выборке.<br><br>
+        <strong>Критический факт:</strong> только Haileybury ежегодно публично раскрывает средний балл IB. Позиции остальных занижены из-за непрозрачности, а не обязательно из-за низкого качества.<br><br>
+        <strong>Прозрачность</strong> — новый критерий, отражающий доступность верифицированных данных. Переместите его вес в 0 для оценки без штрафа за закрытость.
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <div class="table-header">
+      <div class="th">#</div>
+      <div class="th">Школа</div>
+      <div class="th r">Академика</div>
+      <div class="th r">Поступаем.</div>
+      <div class="th r">Цена/кач.</div>
+      <div class="th r">Среда</div>
+      <div class="th r">Прозрачность</div>
+      <div class="th r">Итог</div>
+    </div>
+    <div id="list"></div>
+  </main>
+
+  <footer class="footer" style="grid-column:1/-1">
+    Данные: сайты школ · Факт-лист Госдепа США · digitalbusiness.kz · IBO · Май 2026
+    &nbsp;·&nbsp;
+    <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--gold2);letter-spacing:0.02em">by Zhaiyk Sultan</span>
+  </footer>
+
+</div>
+
+<style>
+.footer { text-align: center; padding: 20px 32px; font-size: 10px; color: var(--muted); letter-spacing: 0.06em; border-top: 1px solid var(--line); background: var(--ink2); }
+</style>
+
+<script>
+var SCHOOLS = [
+  { id:1, name:"Haileybury Astana", types:["ib"], verified:true, nodata:false,
+    tags:[{l:"IB DP",c:"t-ib"},{l:"Bilingual Diploma",c:"t-al"},{l:"Верифицирован",c:"t-ok"}],
+    raw:{ academic:98, destinations:90, value:62, environment:88, transparency:100 },
+    program:"IB Diploma Programme", since:"1998", fee:"~1,1 млн тг/мес",
+    stu:"551", tch:"60+ британских", acc:"IB World School · Haileybury UK",
+    ibHist:{"2022":36.1,"2023":36,"2024":35,"2025":34},
+    hl:"IB 2025: средний 34 / мировой avg 30 · 44% набрали 36+ · 45% bilingual diploma · TOK top 89%",
+    unis:["MIT","UCL","Edinburgh","U Toronto (190K CAD)","UC Berkeley","HKUST","Amsterdam","Politecnico di Milano","BI Norwegian","Erasmus Rotterdam","U Navarra"],
+    note:"Единственная школа Астаны, ежегодно публично раскрывающая средний балл IB. Стабильно выше мирового среднего на 4–6 пунктов. 45% выпускников получают bilingual diploma — редкость для региона.",
+    warn:null },
+
+  { id:2, name:"Miras International School", types:["ib"], verified:false, nodata:false,
+    tags:[{l:"IB PYP+MYP+DP",c:"t-ib"},{l:"Французское отд.",c:"t-gap"}],
+    raw:{ academic:74, destinations:82, value:80, environment:84, transparency:30 },
+    program:"IB PYP + MYP + DP + французская программа", since:"1999", fee:"не раскрывается",
+    stu:"н/д", tch:"10+ стран", acc:"IBO (все 3 уровня) · CIS · NEASC",
+    ibHist:{"2018":34},
+    hl:"423 выпускника в топ-100 вузов мира · 65 университетских грантов · 32 алтын белгі",
+    unis:["U Toronto","LSE","Нидерланды","Швейцария","Испания","топ-100 QS (423 выпускника за историю)"],
+    note:"Первая международная школа Казахстана (1999). Единственная с тремя уровнями IB (PYP+MYP+DP). Французское отделение Charles de Gaulle–Miras. 423 выпускника в топ-100 вузов за всю историю.",
+    warn:"Средний балл IB после 2018 не публикуется. Академическая оценка — исторический показатель (34 балла, 2018) плюс агрегированная статистика поступаемости." },
+
+  { id:3, name:"QSI International School", types:["american"], verified:true, nodata:false,
+    tags:[{l:"AP Capstone",c:"t-ap"},{l:"SAT Center",c:"t-gap"},{l:"Верифицирован",c:"t-ok"}],
+    raw:{ academic:76, destinations:68, value:46, environment:86, transparency:85 },
+    program:"Американская · AP Capstone Diploma · SAT", since:"2005", fee:"~1,5 млн тг/мес",
+    stu:"301 (77 граждан США, 26 нац.)", tch:"56 (24 граждан США)", acc:"MSA/CESS · CEESA · College Board AP Capstone",
+    ibHist:null,
+    hl:"AP avg ≥4 · SAT выше 75-го перцентиля · 10+ AP курсов ежегодно (ротация)",
+    unis:["США","Канада","Европа","конкретные вузы официально не раскрываются"],
+    note:"Данные верифицированы Госдепом США (ежегодный Fact Sheet). Самый высокий чек в Астане. Ориентирована на дипломатический/экспатский состав: 26 национальностей, казахстанцы ~30%.",
+    warn:"Конкретные университеты-приёмники официально не публикуются." },
+
+  { id:4, name:"Spectrum International School", types:["cambridge"], verified:false, nodata:false,
+    tags:[{l:"A-Level",c:"t-al"},{l:"IGCSE",c:"t-gap"},{l:"Нет средних баллов",c:"t-warn"}],
+    raw:{ academic:52, destinations:50, value:78, environment:72, transparency:20 },
+    program:"Cambridge IGCSE + AS & A-Level", since:"2008", fee:"не раскрывается",
+    stu:"н/д", tch:"большинство иностранные", acc:"CIS · NEASC · Cambridge International · ECIS",
+    ibHist:null,
+    hl:"Тест-центр: IELTS, SAT, AP · кейсы выпускников AAA · новый кампус 2023–24",
+    unis:["Международные отношения (европейские вузы)","технические направления","без агрегированных данных"],
+    note:"Часть Bilim Orda Foundation (40+ школ + университет в Казахстане). Новый кампус 2023–24. Официальный тест-центр IELTS/SAT/AP — признак институциональной зрелости.",
+    warn:"Средние баллы A-Level не публикуются. Оценка — аккредитации плюс кейсы выпускников." },
+
+  { id:5, name:"Quantum STEM School", types:["cambridge","stem"], verified:false, nodata:true,
+    tags:[{l:"STEM",c:"t-ap"},{l:"Частная",c:"t-gap"},{l:"Нет данных",c:"t-warn"}],
+    raw:{ academic:42, destinations:38, value:72, environment:65, transparency:5 },
+    program:"STEM-профиль, международные стандарты", since:"н/д", fee:"не раскрывается",
+    stu:"н/д", tch:"н/д", acc:"н/д",
+    ibHist:null,
+    hl:"STEM-ориентация · упоминается в каталогах частных школ Астаны",
+    unis:["NU","KIMEP","технические вузы РК (предположительно)"],
+    note:"Упоминается в каталогах частных школ Астаны как школа STEM-профиля. Верифицированных академических данных нет. Позиция в рейтинге условная.",
+    warn:"Нет верифицированных данных по академическим результатам и поступаемости." },
+
+  { id:6, name:"Ardingly College Astana", types:["cambridge"], verified:false, nodata:true,
+    tags:[{l:"A-Level",c:"t-al"},{l:"IGCSE",c:"t-gap"},{l:"Новая",c:"t-warn"}],
+    raw:{ academic:55, destinations:38, value:48, environment:66, transparency:10 },
+    program:"Cambridge IGCSE + A-Level (Ardingly College UK, осн. 1858)", since:"новая", fee:"не раскрывается",
+    stu:"н/д", tch:"н/д", acc:"Cambridge International · Ardingly College UK",
+    ibHist:null,
+    hl:"Первый зарубежный кампус Ardingly College · 150 лет британских традиций",
+    unis:["история UK: Oxford, Cambridge, Russell Group (материнская школа)"],
+    note:"Первый и единственный зарубежный кампус Ardingly College (основана 1858, UK). Казахстанских выпускников пока нет. Оценка — перенос репутации материнской школы.",
+    warn:"Казахстанских выпускников нет. Академическая оценка не верифицирована локальными данными." },
+
+  { id:7, name:"Milestone School", types:["private"], verified:false, nodata:true,
+    tags:[{l:"Частная",c:"t-gap"},{l:"Нет данных",c:"t-warn"}],
+    raw:{ academic:35, destinations:30, value:70, environment:55, transparency:5 },
+    program:"Частная школа (национальная программа)", since:"н/д", fee:"не раскрывается",
+    stu:"н/д", tch:"н/д", acc:"н/д",
+    ibHist:null,
+    hl:"Упоминается в каталогах частных школ Астаны",
+    unis:["данные отсутствуют"],
+    note:"Упоминается в каталогах частных школ Астаны. Публичных академических данных нет.",
+    warn:"Данные отсутствуют полностью. Позиция условная." }
+];
+
+var KEYS = ["academic","destinations","value","environment","transparency"];
+var CLRS = { academic:"#4A8FD4", destinations:"#4EA87A", value:"#D4943A", environment:"#9B7FD4", transparency:"#C45A5A" };
+var SLBL = { academic:"Академика", destinations:"Поступаем.", value:"Цена/кач.", environment:"Среда", transparency:"Данные" };
+var DLBL = { academic:"Академика", destinations:"Поступаемость", value:"Цена/качество", environment:"Образ. среда", transparency:"Прозрачность" };
+
+var flt = "all", srt = "total", openId = null, prevScores = {};
+
+function getWeights() {
+  return [
+    parseInt(document.getElementById("w1").value),
+    parseInt(document.getElementById("w2").value),
+    parseInt(document.getElementById("w3").value),
+    parseInt(document.getElementById("w4").value),
+    parseInt(document.getElementById("w5").value)
+  ];
+}
+
+function calcScores(data) {
+  var w = getWeights();
+  var tot = w.reduce(function(a,b){ return a+b; }, 0);
+  if (tot === 0) return {};
+  var norm = {};
+  for (var ki = 0; ki < KEYS.length; ki++) {
+    var k = KEYS[ki];
+    var mn = Infinity, mx = -Infinity;
+    data.forEach(function(s){ if(s.raw[k]<mn)mn=s.raw[k]; if(s.raw[k]>mx)mx=s.raw[k]; });
+    var rng = mx - mn;
+    data.forEach(function(s){
+      if(!norm[s.id]) norm[s.id] = {};
+      norm[s.id][k] = rng === 0 ? 0.5 : (s.raw[k] - mn) / rng;
+    });
+  }
+  var scores = {};
+  data.forEach(function(s){
+    var sc = norm[s.id];
+    var score = (w[0]*sc.academic + w[1]*sc.destinations + w[2]*sc.value + w[3]*sc.environment + w[4]*sc.transparency) / tot;
+    scores[s.id] = Math.round(score * 100);
+  });
+  return scores;
+}
+
+function getFiltered() {
+  var d = SCHOOLS.slice();
+  if (flt === "verified") d = d.filter(function(s){ return s.verified; });
+  else if (flt === "nodata") d = d.filter(function(s){ return s.nodata; });
+  else if (flt !== "all") d = d.filter(function(s){ return s.types.indexOf(flt) >= 0; });
+  return d;
+}
+
+function rc(r) { return "r" + Math.min(r, 7); }
+function rl(r) { return r===1?"GOLD":r===2?"SILVER":r===3?"BRONZE":""; }
+
+function mkMiniBar(val, color) {
+  return "<div class='mini-bar-wrap'>" +
+    "<div class='mini-bar-val'>" + val + "</div>" +
+    "<div class='mini-bar-track'><div class='mini-bar-fill' style='width:" + val + "%;background:" + color + "'></div></div>" +
+    "</div>";
+}
+
+function mkIbChart(ibHist) {
+  if (!ibHist) return "<div style='color:var(--muted);font-size:10px;padding:8px 0'>Нет данных о баллах IB/A-Level</div>";
+  var yrs = Object.keys(ibHist);
+  var vals = yrs.map(function(y){ return ibHist[y]; });
+  var maxV = Math.max.apply(null, vals);
+  var html = "<div class='ib-history'>";
+  yrs.forEach(function(y){
+    var v = ibHist[y];
+    var pct = Math.round((v - 28) / (42 - 28) * 100);
+    html += "<div class='ib-yr'>" +
+      "<div class='ib-yr-val'>" + v + "</div>" +
+      "<div class='ib-bar-wrap'><div class='ib-bar' style='height:" + pct + "%'></div></div>" +
+      "<div class='ib-yr-label'>" + y + "</div>" +
+    "</div>";
+  });
+  html += "</div><div class='ib-avg-line'>мировой avg 2025: 30 / 45</div>";
+  return html;
+}
+
+function mkCard(s, rank, score, prev) {
+  var op = openId === s.id;
+  var delta = prev !== undefined ? score - prev : 0;
+  var deltaHtml = "";
+  if (delta > 0) deltaHtml = "<div class='score-delta delta-up'>+" + delta + "</div>";
+  else if (delta < 0) deltaHtml = "<div class='score-delta delta-dn'>" + delta + "</div>";
+
+  var tags = s.tags.map(function(t){ return "<span class='stag " + t.c + "'>" + t.l + "</span>"; }).join("");
+
+  var scoreCells = KEYS.map(function(k,i){
+    return "<div class='score-cell'>" + mkMiniBar(s.raw[k], CLRS[k]) + "</div>";
+  }).join("");
+
+  var dbars = KEYS.map(function(k){
+    return "<div class='sbar-row'>" +
+      "<div class='sbar-label'>" + DLBL[k] + "</div>" +
+      "<div class='sbar-track'><div class='sbar-fill' style='width:" + s.raw[k] + "%;background:" + CLRS[k] + "'></div></div>" +
+      "<div class='sbar-val'>" + s.raw[k] + "</div>" +
+    "</div>";
+  }).join("");
+
+  var unis = s.unis.map(function(u){ return "<span class='uni-chip'>" + u + "</span>"; }).join("");
+  var warn = s.warn ? "<div class='data-warn'>" + s.warn + "</div>" : "";
+
+  return "<div class='srow " + rc(rank) + (op ? " open" : "") + "' data-id='" + s.id + "'>" +
+    "<div class='srow-main'>" +
+      "<div class='rank-cell'><div class='rank-n'>" + rank + "</div><div class='rank-medal'>" + rl(rank) + "</div></div>" +
+      "<div class='name-cell'>" +
+        "<div class='school-name'>" + s.name + "</div>" +
+        "<div class='school-tags'>" + tags + "</div>" +
+      "</div>" +
+      scoreCells +
+      "<div class='total-cell'>" +
+        "<div class='total-score'>" + score + "<span class='tsub'>/100</span></div>" +
+        deltaHtml +
+        "<div class='expand-hint'>" + (op ? "▲ свернуть" : "▼ детали") + "</div>" +
+      "</div>" +
+    "</div>" +
+    "<div class='detail-panel'>" +
+      "<div class='detail-grid'>" +
+        "<div class='detail-col'>" +
+          "<div class='dblock'><div class='dblock-title'>Показатели</div><div class='score-bars'>" + dbars + "</div></div>" +
+        "</div>" +
+        "<div class='detail-col'>" +
+          "<div class='dblock'><div class='dblock-title'>Основные данные</div>" +
+            "<div class='drow'><span class='dk'>Программа</span><span class='dv'>" + s.program + "</span></div>" +
+            "<div class='drow'><span class='dk'>Основана</span><span class='dv'>" + s.since + "</span></div>" +
+            "<div class='drow'><span class='dk'>Стоимость/мес</span><span class='dv'>" + s.fee + "</span></div>" +
+            "<div class='drow'><span class='dk'>Учеников</span><span class='dv'>" + s.stu + "</span></div>" +
+            "<div class='drow'><span class='dk'>Учителя</span><span class='dv'>" + s.tch + "</span></div>" +
+            "<div class='drow'><span class='dk'>Аккредитация</span><span class='dv'>" + s.acc + "</span></div>" +
+          "</div>" +
+          "<div class='dblock'><div class='dblock-title'>Результаты IB / экзамены</div>" + mkIbChart(s.ibHist) +
+            "<div style='margin-top:8px;font-size:10px;color:var(--muted)'>" + s.hl + "</div>" +
+          "</div>" +
+        "</div>" +
+        "<div class='detail-col'>" +
+          "<div class='dblock'><div class='dblock-title'>Куда поступают выпускники</div><div class='unis'>" + unis + "</div></div>" +
+          "<div class='dblock'><div class='dblock-title'>Аналитическая заметка</div>" +
+            "<div class='detail-note'>" + s.note + "</div>" +
+            warn +
+          "</div>" +
+        "</div>" +
+      "</div>" +
+    "</div>" +
+  "</div>";
+}
+
+function render() {
+  var el = document.getElementById("list");
+  var data = getFiltered();
+  if (!data.length) { el.innerHTML = "<div class='empty'>Нет школ по выбранному фильтру</div>"; return; }
+
+  var scores = calcScores(data);
+
+  data.sort(function(a, b){
+    if (srt === "total") return scores[b.id] - scores[a.id];
+    if (srt === "academic") return b.raw.academic - a.raw.academic;
+    if (srt === "destinations") return b.raw.destinations - a.raw.destinations;
+    if (srt === "value") return b.raw.value - a.raw.value;
+    if (srt === "transparency") return b.raw.transparency - a.raw.transparency;
+    if (srt === "name") return a.name < b.name ? -1 : 1;
+    return 0;
+  });
+
+  el.innerHTML = data.map(function(s, i){ return mkCard(s, i+1, scores[s.id], prevScores[s.id]); }).join("");
+  prevScores = scores;
+
+  el.querySelectorAll(".srow").forEach(function(card){
+    card.addEventListener("click", function(){
+      var id = parseInt(card.getAttribute("data-id"));
+      openId = openId === id ? null : id;
+      render();
+    });
+  });
+
+  var tot = getWeights().reduce(function(a,b){ return a+b; }, 0);
+  var tv = document.getElementById("wtotal");
+  tv.textContent = tot + "%";
+  tv.className = tot === 100 ? "wtotal-val" : "wtotal-val err";
+}
+
+[["w1","w1v"],["w2","w2v"],["w3","w3v"],["w4","w4v"],["w5","w5v"]].forEach(function(pair){
+  document.getElementById(pair[0]).addEventListener("input", function(){
+    document.getElementById(pair[1]).textContent = document.getElementById(pair[0]).value + "%";
+    prevScores = {};
+    render();
+  });
+});
+
+document.getElementById("resetBtn").addEventListener("click", function(){
+  [["w1",40],["w2",30],["w3",15],["w4",10],["w5",5]].forEach(function(p){
+    document.getElementById(p[0]).value = p[1];
+    document.getElementById(p[0]+"v").textContent = p[1] + "%";
+  });
+  prevScores = {};
+  render();
+});
+
+document.querySelectorAll(".fbtn").forEach(function(b){
+  b.addEventListener("click", function(){
+    document.querySelectorAll(".fbtn").forEach(function(x){ x.classList.remove("on"); });
+    b.classList.add("on");
+    flt = b.getAttribute("data-f");
+    openId = null; prevScores = {};
+    render();
+  });
+});
+
+document.querySelectorAll(".sort-btn").forEach(function(b){
+  b.addEventListener("click", function(){
+    document.querySelectorAll(".sort-btn").forEach(function(x){ x.classList.remove("on"); });
+    b.classList.add("on");
+    srt = b.getAttribute("data-s");
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
